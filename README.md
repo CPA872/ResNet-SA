@@ -3,15 +3,17 @@
 ## Implementation 
 `test_resnet118.py`: Full model inference tests, run `python3 test_resnet18.py` to see matching results and compare between FPGA and CPU performing full ResNet18 inference. 
 `im2col.py`: This file contains im2col transformation implementations
-`resset18_fp32.py` This file contains the FPGA host controller and our custom implementation of convolution and linear layers. It also includes the ResNet18 implementation with these custom layers. Using the new ResNet18 class with its `forward()` method automatically offloads all convolutions and linear layers to systolic array on the FPGA. 
+`resset18_fp32.py` This file contains the FPGA host controller and our custom implementation of convolution and linear layers. It also includes the ResNet18 implementation with these custom layers. Using the new ResNet18 class with its `forward()` method automatically offloads all convolutions and linear layers to the systolic array on the FPGA. 
+`utils.py`: This contains some dependencies methods. 
 
 
 ## Dependencies
 Download our built bitstream here: https://drive.google.com/file/d/11-WMjltd5ekjU-s6g1W9vp8ePAcMkXLA/view?usp=sharing
 
-The bitstream location, after unzipping, is `<your_workspace>/gemm_hls/build3_fp32_m64_k8_512/MatrixMultiplication_hw.cxlbin`
+The bitstream location, after unzipping, is `<your_workspace>/gemm_hls/build3_fp32_m64_k8_512/MatrixMultiplication_hw.xclbin`
+You would need to change the XCLBIN_LOCATION variable for `resnet18_fp32.py` to ensure PYNQ loads the correct kernel. 
 
-We use a Xilinx U280 FPGA in this project. The dependencies are quite complicated. 
+We use a Xilinx U280 FPGA in this project. It is very painful to find old versioned Xilinx stuff. 
 (If you would like to recreate the results, it would be easier to contact me at yup014@ucsd.edu since I have all the environment ready)
 
 Host Environment
@@ -22,7 +24,7 @@ FPGA Tools
 - Xilinx Vitis 2021.1
 - XRT Version 2.12
 - Firmware: xilinx_u280_xdma_201920_3
-Note: it is imperative to ensure the firmware and XRT match. Differences in versions will cause the bitstream to fail. 
+Note: it is imperative to ensure the firmware and XRT match. Differences in versions will cause the bitstream to fail. Unfortunately, we tested that Vitis > 2021.1 has issues with the design so only older versions work. This also means the XRT and U280 firmware need to be kept old. 
 
 Below is the output of `xbmgmt examine`, please ensure various versions listed under XRT and Device sections match with what you have. 
 ```

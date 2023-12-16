@@ -1,8 +1,18 @@
 # CSE240D-Final-Project
 
-## Dependecies
-We use a Xilinx U280 FPGA in this project. The dependencies is quite complicated. 
-(If you would like to recreate the results, it would be easier to contact me at yup014@ucsd.edu since I have all environment ready)
+## Implementation 
+`test_resnet118.py`: Full model inference tests, run `python3 test_resnet18.py` to see matching results and compare between FPGA and CPU performing full ResNet18 inference. 
+`im2col.py`: This file contains im2col transformation implementations
+`resset18_fp32.py` This file contains the FPGA host controller and our custom implementation of convolution and linear layers. It also includes the ResNet18 implementation with these custom layers. Using the new ResNet18 class with its `forward()` method automatically offloads all convolutions and linear layers to systolic array on the FPGA. 
+
+
+## Dependencies
+Download our built bitstream here: https://drive.google.com/file/d/11-WMjltd5ekjU-s6g1W9vp8ePAcMkXLA/view?usp=sharing
+
+The bitstream location, after unzipping, is `<your_workspace>/gemm_hls/build3_fp32_m64_k8_512/MatrixMultiplication_hw.cxlbin`
+
+We use a Xilinx U280 FPGA in this project. The dependencies are quite complicated. 
+(If you would like to recreate the results, it would be easier to contact me at yup014@ucsd.edu since I have all the environment ready)
 
 Host Environment
 - PYNQ 3.0.1
@@ -12,7 +22,7 @@ FPGA Tools
 - Xilinx Vitis 2021.1
 - XRT Version 2.12
 - Firmware: xilinx_u280_xdma_201920_3
-Note: it is imperative to ensure the the firmware and XRT matches. Difference in versions will cause the bitstream to fail. 
+Note: it is imperative to ensure the firmware and XRT match. Differences in versions will cause the bitstream to fail. 
 
 Below is the output of `xbmgmt examine`, please ensure various versions listed under XRT and Device sections match with what you have. 
 ```
@@ -35,7 +45,7 @@ XRT (2.11 and 2.12 tested, others unknown)
   XOCL                 : 2.12.427, 2719b6027e185000fc49783171631db03fc0ef79
   XCLMGMT              : 2.12.427, 2719b6027e185000fc49783171631db03fc0ef79
 
-Devices present (xilinx_u280_xdma_201920_3 must bmatch)
+Devices present (xilinx_u280_xdma_201920_3 must match)
   [0000:01:00.0] : xilinx_u280_xdma_201920_3 mgmt(inst=256)
 ```
 

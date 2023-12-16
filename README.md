@@ -1,9 +1,12 @@
 # CSE240D-Final-Project
 
-## Implementation 
+## Implementations
 `test_resnet118.py`: Full model inference tests, run `python3 test_resnet18.py` to see matching results and compare between FPGA and CPU performing full ResNet18 inference. 
+
 `im2col.py`: This file contains im2col transformation implementations
+
 `resset18_fp32.py` This file contains the FPGA host controller and our custom implementation of convolution and linear layers. It also includes the ResNet18 implementation with these custom layers. Using the new ResNet18 class with its `forward()` method automatically offloads all convolutions and linear layers to the systolic array on the FPGA. 
+
 `utils.py`: This contains some dependencies methods. 
 
 

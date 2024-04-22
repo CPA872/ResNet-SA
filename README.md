@@ -1,4 +1,4 @@
-# CSE240D-Final-Project
+# ResNet On Systolic Array
 
 ## Implementations
 `test_resnet118.py`: Full model inference tests, run `python3 test_resnet18.py` to see matching results and compare between FPGA and CPU performing full ResNet18 inference. 
